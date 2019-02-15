@@ -1,4 +1,18 @@
-module Exp exposing (Bound(..), DNumber(..), Domain(..), DomainError(..), ListChunk(..), Meta, NumOrInf(..), WithMeta, defaultMeta, run, solveDomains)
+module Exp exposing
+    ( Bound(..)
+    , DNumber(..)
+    , Domain(..)
+    , DomainError(..)
+    , ListChunk(..)
+    , Meta
+    , NumOrInf(..)
+    , WithMeta
+    , defaultMeta
+    , solveDomains
+    )
+
+-- 1. Can n % 2 == 0 branch be expressed? (Non standard step f)
+-- 2. Print a code of the function by its name
 
 
 type alias Meta =
@@ -7,19 +21,9 @@ type alias Meta =
     }
 
 
-defaultMeta : Int -> Meta
-defaultMeta id =
-    { id = id, line = 0 }
-
-
 type DomainError
     = DomainError String (List Meta)
     | NotImplementedYet (List Meta)
-
-
-
--- 1. Can n % 2 == 0 branch be expressed? (Non standard step f)
--- 2. Print a code of the function by its name
 
 
 {-| Expresses a number or an infinity (used for range)
@@ -33,10 +37,6 @@ type NumOrInf n
 type Bound x
     = Open x
     | Closed x
-
-
-
--- Primitive domains
 
 
 {-| Number domain
@@ -74,6 +74,11 @@ type Domain
       -- | DFunction
       -- | DStruct
     | Self Int
+
+
+defaultMeta : Int -> Meta
+defaultMeta id =
+    { id = id, line = 0 }
 
 
 solveDomains : WithMeta -> WithMeta -> Result DomainError WithMeta
@@ -118,7 +123,7 @@ solveDNumber metaL l metaR r =
                 Err <| DomainError (toString x ++ " and " ++ toString y ++ "are different") [ metaL, metaR ]
 
         _ ->
-            Debug.crash "niy"
+            Err <| NotImplementedYet [ metaL, metaR ]
 
 
 onAllSuccess : List (Result a b) -> Result a (List b)
@@ -132,8 +137,3 @@ onAllSuccess list =
 
         (Ok a) :: rest ->
             Result.map (flip (++) [ a ]) (onAllSuccess rest)
-
-
-run : String
-run =
-    "Hello, world!"
