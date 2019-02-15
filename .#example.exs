@@ -1,1 +1,0 @@
-krzysztofwende@MacBook-Pro-3.local.54923
