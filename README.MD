@@ -1,4 +1,4 @@
-## EXP - Elixir Proof System (!!! Proof of concept !!!)
+## EXP - Elixir Proofreader (!!! Proof of concept !!!)
 
 EXP is an ultimate type helper for your Elixir development environment.
 
