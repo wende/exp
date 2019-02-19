@@ -126,6 +126,15 @@ solveDNumber metaL l metaR r =
             Err <| NotImplementedYet [ metaL, metaR ]
 
 
+query : WithMeta -> WithMeta -> Bool
+query l r =
+    solveDomains l r |> Result.toMaybe |> (/=) Nothing
+
+
+
+-- Private functions
+
+
 onAllSuccess : List (Result a b) -> Result a (List b)
 onAllSuccess list =
     case list of
